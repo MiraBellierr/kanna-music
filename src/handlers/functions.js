@@ -6,20 +6,10 @@ const { AudioPlayerStatus, createAudioResource } = require("@discordjs/voice");
 module.exports = {
 	play: async function (client, interaction, song) {
 		const queue = client.queue.get(interaction.guild.id);
-		if (!song) {
-			console.log(client.queue);
-			queue.connection.destroy();
-
-			client.queue.delete(interaction.guild.id);
-
-			return;
-		}
 
 		const resource = createAudioResource(ytdl(song.url), {
 			inlineVolume: true,
 		});
-
-		console.log(resource.volume);
 
 		queue.player.play(resource);
 
@@ -27,16 +17,22 @@ module.exports = {
 
 		queue.player
 			.on(AudioPlayerStatus.Idle, () => {
-				client.queue.get(interaction.guild.id).songs.shift();
+				queue.songs.shift();
 
-				module.exports.play(
-					interaction,
-					client.queue.get(interaction.guild.id).songs[0]
-				);
+				if (!queue.songs.length) {
+					queue.connection.destroy();
+
+					client.queue.delete(interaction.guild.id);
+
+					return interaction.followUp("Music Ended");
+				}
+
+				module.exports.play(interaction, queue.songs[0]);
 			})
 			.on("error", (err) => {
 				console.log(err);
 				interaction.followUp("An error occured");
+				return;
 			});
 
 		interaction.followUp(`Start playing: **${song.title}**`);
