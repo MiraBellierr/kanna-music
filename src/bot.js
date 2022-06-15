@@ -27,12 +27,8 @@ client.commands = new Collection();
 client.categories = fs.readdirSync("./src/commands/");
 client.player = new Player(client);
 
-["command", "event"].forEach((handler) => {
+["command", "event", "player"].forEach((handler) => {
 	require(`./handlers/${handler}`)(client);
-});
-
-client.player.on("trackStart", (queue, track) => {
-	queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`);
 });
 
 client.login(process.env.TOKEN);
