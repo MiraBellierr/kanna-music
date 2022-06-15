@@ -1,7 +1,11 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v8");
 const ytdl = require("ytdl-core");
-const { AudioPlayerStatus, createAudioResource } = require("@discordjs/voice");
+const {
+	AudioPlayerStatus,
+	createAudioResource,
+	VoiceConnectionStatus,
+} = require("@discordjs/voice");
 
 module.exports = {
 	play: async function (client, interaction, song) {
@@ -17,17 +21,19 @@ module.exports = {
 
 		queue.player
 			.on(AudioPlayerStatus.Idle, () => {
-				queue.songs.shift();
+				queue.connection.on(VoiceConnectionStatus.Ready, () => {
+					queue.songs.shift();
 
-				if (!queue.songs.length) {
-					queue.connection.destroy();
+					if (!queue.songs.length) {
+						queue.connection.destroy();
 
-					client.queue.delete(interaction.guild.id);
+						client.queue.delete(interaction.guild.id);
 
-					return interaction.followUp("Music Ended");
-				}
+						return interaction.followUp("Music Ended");
+					}
 
-				module.exports.play(interaction, queue.songs[0]);
+					module.exports.play(interaction, queue.songs[0]);
+				});
 			})
 			.on("error", (err) => {
 				console.log(err);
