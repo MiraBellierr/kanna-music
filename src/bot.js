@@ -1,5 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const fs = require("fs");
+const { Player } = require("discord-player");
 
 const client = new Client({
 	allowedMentions: { parse: ["users"] },
@@ -24,10 +25,14 @@ const client = new Client({
 
 client.commands = new Collection();
 client.categories = fs.readdirSync("./src/commands/");
-client.queue = new Collection();
+client.player = new Player(client);
 
 ["command", "event"].forEach((handler) => {
 	require(`./handlers/${handler}`)(client);
+});
+
+client.player.on("trackStart", (queue, track) => {
+	queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`);
 });
 
 client.login(process.env.TOKEN);

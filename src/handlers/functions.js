@@ -1,48 +1,7 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v8");
-const ytdl = require("ytdl-core");
-const {
-	AudioPlayerStatus,
-	createAudioResource,
-	VoiceConnectionStatus,
-} = require("@discordjs/voice");
 
 module.exports = {
-	play: async function (client, interaction, song) {
-		const queue = client.queue.get(interaction.guild.id);
-
-		const resource = createAudioResource(ytdl(song.url), {
-			inlineVolume: true,
-		});
-
-		queue.player.play(resource);
-
-		queue.connection.subscribe(queue.player);
-
-		queue.player
-			.on(AudioPlayerStatus.Idle, () => {
-				queue.connection.on(VoiceConnectionStatus.Ready, () => {
-					queue.songs.shift();
-
-					if (!queue.songs.length) {
-						queue.connection.destroy();
-
-						client.queue.delete(interaction.guild.id);
-
-						return interaction.followUp("Music Ended");
-					}
-
-					module.exports.play(interaction, queue.songs[0]);
-				});
-			})
-			.on("error", (err) => {
-				console.log(err);
-				interaction.followUp("An error occured");
-				return;
-			});
-
-		interaction.followUp(`Start playing: **${song.title}**`);
-	},
 	shuffleArray: function (array) {
 		let currentIndex = array.length,
 			randomIndex;
