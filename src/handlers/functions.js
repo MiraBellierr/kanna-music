@@ -17,7 +17,7 @@ module.exports = {
 
 		queue.player.play(resource);
 
-		queue.connection.subscribe(client.queue.get(interaction.guild.id).player);
+		queue.connection.subscribe(queue.player);
 
 		queue.player
 			.on(AudioPlayerStatus.Idle, () => {
