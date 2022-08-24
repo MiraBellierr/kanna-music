@@ -11,10 +11,10 @@ module.exports = {
 
 		const track = queue.nowPlaying();
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setThumbnail(track.thumbnail)
 			.setTitle(`<a:kannahype:986635665162768454> Now Playing`)
-			.setColor("PURPLE")
+			.setColor(Discord.Colors.Purple)
 			.setDescription(`${track.title}`);
 
 		interaction.reply({ embeds: [embed] });

@@ -15,9 +15,9 @@ module.exports = {
 				`${index + 1} - **${track.title}** \`${track.duration}\``
 		);
 
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setTitle("<a:kannahype:986635665162768454> Queue")
-			.setColor("PURPLE")
+			.setColor(Discord.Colors.Purple)
 			.setDescription(
 				`Now Playing: **${queue.nowPlaying().title}** \`${
 					queue.nowPlaying().duration

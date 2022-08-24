@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { stripIndents } = require("common-tags");
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
 };
 
 function getAll(client, interaction) {
-	const embed = new MessageEmbed()
+	const embed = new EmbedBuilder()
 		.setAuthor({
 			name: interaction.user.username,
 			iconURL: interaction.user.displayAvatarURL({ dynamic: true }),

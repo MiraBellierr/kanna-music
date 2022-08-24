@@ -1,19 +1,28 @@
 {
-	"name": "kanna-music",
-	"version": "1.0.0",
-	"main": "src/index.js",
-	"repository": "https://github.com/MiraBellierr/kanna-music.git",
-	"author": "MiraBellierr",
-	"license": "MIT",
-	"packageManager": "yarn@3.2.1",
-	"dependencies": {
-		"@discordjs/opus": "^0.7.0",
-		"@discordjs/rest": "^0.5.0",
-		"ascii-table": "^0.0.9",
-		"common-tags": "^1.8.2",
-		"discord-player": "^5.2.2",
-		"discord.js": "^13.8.0",
-		"dotenv": "^16.0.1",
-		"ffmpeg-static": "^5.0.0"
-	}
+  "name": "kanna-music",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiraBellierr/kanna-music.git"
+  },
+  "author": "MiraBellierr",
+  "license": "MIT",
+  "description": "A simple discord.js music bot",
+  "bugs": {
+    "url": "https://github.com/MiraBellierr/kanna-music/issues"
+  },
+  "homepage": "https://github.com/MiraBellierr/kanna-music#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.8.0",
+    "ascii-table": "^0.0.9",
+    "common-tags": "^1.8.2",
+    "discord-player": "^5.3.1",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.1",
+    "ffmpeg-static": "^5.0.2"
+  }
 }
